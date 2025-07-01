@@ -14,12 +14,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Cool animated gradient background */
-            background: linear-gradient(120deg, #0f2027, #2c5364, #1e3c72, #4fc3f7 90%);
-            background-size: 200% 200%;
-            animation: gradientMove 8s ease-in-out infinite;
+            /* Animated blue/black gradient background */
+            background: linear-gradient(300deg, #0f2027, #2c5364, #1e3c72, #4fc3f7 90%);
+            background-size: 180% 180%;
+            animation: gradient-animation 18s ease infinite;
         }
-        @keyframes gradientMove {
+        @keyframes gradient-animation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
@@ -119,12 +119,12 @@
         <ol>
             <li>Find <code>src="YOUR URL HERE!"</code> in the code below.</li>
             <li>Replace <code>YOUR URL HERE!</code> with the full address of the website you want to embed.<br>
-                Example: <code>src="https://www.example.com"</code></li>
+                Example: <code>src="https://www.wikipedia.org"</code></li>
             <li>Use a valid, accessible URL (preferably starting with <code>https://</code>).</li>
             <li>If the preview is blank or shows an error, the website may not allow embedding in iframes.</li>
         </ol>
     </div>
-    <textarea id="htmlInput" placeholder="Type your HTML here..."><iframe src="YOUR URL HERE!" title="About:Blank" width="100%" height="100%"></iframe>
+    <textarea id="htmlInput" placeholder="Type your HTML here..."><iframe src="https://www.wikipedia.org" title="About:Blank" width="100%" height="100%"></iframe>
 </textarea>
     <button onclick="openInNewTab()">Preview page</button>
     <div id="previewContainer">
