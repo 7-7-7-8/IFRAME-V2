@@ -1,161 +1,40 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>about:blank generator</title>
-    <style>
-        body {
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            color: #e0e6f6;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            /* Animated blue/black gradient background */
-            background: linear-gradient(300deg, #0f2027, #2c5364, #1e3c72, #4fc3f7 90%);
-            background-size: 180% 180%;
-            animation: gradient-animation 18s ease infinite;
-        }
-        @keyframes gradient-animation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        h1 {
-            margin-top: 40px;
-            margin-bottom: 20px;
-            color: #4fc3f7;
-            letter-spacing: 2px;
-            font-weight: 700;
-            text-shadow: 0 2px 16px #0008, 0 0 40px #4fc3f7;
-        }
-        #instructions {
-            background: rgba(24, 28, 47, 0.95);
-            color: #4fc3f7;
-            padding: 16px;
-            border-radius: 8px;
-            max-width: 600px;
-            margin-bottom: 20px;
-            font-size: 1.07em;
-            box-shadow: 0 2px 24px #0006;
-        }
-        #instructions ol {
-            color: #e0e6f6;
-            margin-left: 18px;
-        }
-        #instructions code {
-            background: #23283c;
-            color: #4fc3f7;
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-size: 0.97em;
-        }
-        textarea {
-            width: 90vw;
-            max-width: 600px;
-            height: 180px;
-            margin-bottom: 20px;
-            background: #181c2f;
-            color: #e0e6f6;
-            border: 2px solid #4fc3f7;
-            border-radius: 8px;
-            padding: 16px;
-            font-size: 1.05em;
-            transition: border 0.2s;
-            box-shadow: 0 2px 10px #0006;
-            resize: vertical;
-        }
-        textarea:focus {
-            border-color: #1976d2;
-            outline: none;
-        }
-        button {
-            background: linear-gradient(90deg, #1976d2 0%, #4fc3f7 100%);
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 12px 32px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 2px 10px #0004;
-            transition: background 0.2s, transform 0.1s;
-        }
-        button:hover {
-            background: linear-gradient(90deg, #1565c0 0%, #039be5 100%);
-            transform: translateY(-2px) scale(1.03);
-        }
-        #previewContainer {
-            width: 90vw;
-            max-width: 600px;
-            margin-top: 24px;
-            background: rgba(24, 28, 47, 0.95);
-            border-radius: 8px;
-            box-shadow: 0 2px 20px #0006;
-            padding: 12px;
-        }
-        #livePreview {
-            width: 100%;
-            height: 220px;
-            border: none;
-            background: #fff;
-            border-radius: 6px;
-        }
-        @media (max-width: 700px) {
-            textarea, #previewContainer, #instructions {
-                width: 98vw;
-                font-size: 1em;
-            }
-        }
-    </style>
+    <title>IFrame Test</title>
 </head>
 <body>
-    <h1>IFrame Generator</h1>
-    <div id="instructions">
-        <strong>How to Add a URL to Your IFrame:</strong>
-        <ol>
-            <li>Find <code>src="YOUR URL HERE!"</code> in the code below.</li>
-            <li>Replace <code>YOUR URL HERE!</code> with the full address of the website you want to embed.<br>
-                Example: <code>src="https://www.wikipedia.org"</code></li>
-            <li>Use a valid, accessible URL (preferably starting with <code>https://</code>).</li>
-            <li>If the preview is blank or shows an error, the website may not allow embedding in iframes.</li>
-        </ol>
-    </div>
-    <textarea id="htmlInput" placeholder="Type your HTML here..."><iframe src="https://www.wikipedia.org" title="About:Blank" width="100%" height="100%"></iframe>
-</textarea>
+    <textarea id="htmlInput" style="width:100%;height:100px;">
+<iframe src="https://example.com" width="100%" height="300"></iframe>
+    </textarea>
     <button onclick="openInNewTab()">Preview page</button>
-    <div id="previewContainer">
-        <strong style="color:#4fc3f7;">Live Preview:</strong>
-        <iframe id="livePreview"></iframe>
+    <div>
+        <strong>Live Preview:</strong>
+        <iframe id="livePreview" width="100%" height="300"></iframe>
     </div>
     <script>
         function openInNewTab() {
             var userHtml = document.getElementById("htmlInput").value;
-            var fullHtml = `
+            var newWindow = window.open();
+            newWindow.document.write(`
                 <!DOCTYPE html>
                 <html>
                 <head>
-                    <meta charset="UTF-8">
+                    <meta charset='UTF-8'>
                     <title>Preview</title>
                 </head>
-                <body style="margin:0;padding:0;">
+                <body>
                     ${userHtml}
                 </body>
                 </html>
-            `;
-            var dataUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(fullHtml);
-            window.open(dataUrl, '_blank');
+            `);
+            newWindow.document.close();
         }
-
         function updateLivePreview() {
             var html = document.getElementById("htmlInput").value;
-            var previewFrame = document.getElementById("livePreview");
-            previewFrame.srcdoc = html;
+            document.getElementById("livePreview").srcdoc = html;
         }
-
         document.getElementById("htmlInput").addEventListener("input", updateLivePreview);
         window.onload = updateLivePreview;
     </script>
