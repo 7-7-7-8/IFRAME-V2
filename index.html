@@ -133,9 +133,20 @@
     </div>
     <script>
         function openInNewTab() {
-            var html = document.getElementById("htmlInput").value;
-            // Encode the HTML as a data URL to isolate it from your generator
-            var dataUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+            var userHtml = document.getElementById("htmlInput").value;
+            var fullHtml = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Preview</title>
+                </head>
+                <body style="margin:0;padding:0;">
+                    ${userHtml}
+                </body>
+                </html>
+            `;
+            var dataUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(fullHtml);
             window.open(dataUrl, '_blank');
         }
 
@@ -145,7 +156,6 @@
             previewFrame.srcdoc = html;
         }
 
-        // Initial preview and on input
         document.getElementById("htmlInput").addEventListener("input", updateLivePreview);
         window.onload = updateLivePreview;
     </script>
